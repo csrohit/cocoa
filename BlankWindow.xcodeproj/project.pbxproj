@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A7601BBB2AFF9E310049B286 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A7601BBA2AFF9E310049B286 /* AppDelegate.m */; };
 		A7E4DA6D2AFF34DA003BE9D2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E4DA6C2AFF34DA003BE9D2 /* main.m */; };
+		A7E4DA752AFF3B97003BE9D2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E4DA742AFF3B97003BE9D2 /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,8 +25,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A7601BB92AFF9DB70049B286 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A7601BBA2AFF9E310049B286 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		A7E4DA692AFF34DA003BE9D2 /* BlankWindow */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BlankWindow; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7E4DA6C2AFF34DA003BE9D2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A7E4DA742AFF3B97003BE9D2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		A7E4DA762AFF3BC7003BE9D2 /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = info.plist; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7E4DA752AFF3B97003BE9D2 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,8 +48,10 @@
 		A7E4DA602AFF34DA003BE9D2 = {
 			isa = PBXGroup;
 			children = (
+				A7601BB92AFF9DB70049B286 /* AppDelegate.h */,
 				A7E4DA6B2AFF34DA003BE9D2 /* BlankWindow */,
 				A7E4DA6A2AFF34DA003BE9D2 /* Products */,
+				A7E4DA732AFF3B97003BE9D2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,9 +66,19 @@
 		A7E4DA6B2AFF34DA003BE9D2 /* BlankWindow */ = {
 			isa = PBXGroup;
 			children = (
+				A7E4DA762AFF3BC7003BE9D2 /* info.plist */,
 				A7E4DA6C2AFF34DA003BE9D2 /* main.m */,
+				A7601BBA2AFF9E310049B286 /* AppDelegate.m */,
 			);
 			path = BlankWindow;
+			sourceTree = "<group>";
+		};
+		A7E4DA732AFF3B97003BE9D2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A7E4DA742AFF3B97003BE9D2 /* Cocoa.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,6 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7601BBB2AFF9E310049B286 /* AppDelegate.m in Sources */,
 				A7E4DA6D2AFF34DA003BE9D2 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,9 +264,12 @@
 		A7E4DA712AFF34DA003BE9D2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BTH77K28H7;
 				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -254,9 +277,12 @@
 		A7E4DA722AFF34DA003BE9D2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BTH77K28H7;
 				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
