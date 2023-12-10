@@ -61,7 +61,38 @@ struct MyLight lights[]=
         {1.0f, 1.0f, 1.0f, 1.0f},
         {0.0f, 0.0f, 2.0f,1.0f},
         {1.0f, 0.0f, 0.0f},
-    }
+    },
+    {
+        GL_LIGHT3,
+        false,
+        black,
+        {0.0f, 0.0f, 0.0f, 1.0f},
+        {1.0f, 0.0f, 1.0f, 1.0f},
+        {1.0f, 1.0f, 1.0f, 1.0f},
+        {0.0f, 0.0f, 2.0f,1.0f},
+        {1.0f, 1.0f, 0.0f},
+    },
+    {
+        GL_LIGHT4,
+        false,
+        black,
+        {0.0f, 0.0f, 0.0f, 1.0f},
+        {1.0f, 1.0f, 0.0f, 1.0f},
+        {1.0f, 1.0f, 1.0f, 1.0f},
+        {2.0f, 0.0f, 0.0f,1.0f},
+        {0.0f, 1.0f, 1.0f},
+    },
+    {
+        GL_LIGHT5,
+        false,
+        black,
+        {0.0f, 0.0f, 0.0f, 1.0f},
+        {0.0f, 1.0f, 1.0f, 1.0f},
+        {1.0f, 1.0f, 1.0f, 1.0f},
+        {0.0f, 2.0f, 0.0f,1.0f},
+        {1.0f, 0.0f, 1.0f},
+    },
+
 };
 
 #define NUM_LIGHTS 3U
@@ -348,7 +379,7 @@ extern FILE *gpFile;
         glMaterialfv(GL_FRONT, GL_EMISSION, black);
         glMaterialfv(GL_FRONT, GL_DIFFUSE, materialDiffuse);
         glMaterialfv(GL_FRONT, GL_SPECULAR, materialSpecular);
-        gluSphere(pQuadric, 1.0f, 100, 100); // it will create all normals for you
+        gluSphere(pQuadric, 0.5f, 100, 100); // it will create all normals for you
         
         glMaterialfv(GL_FRONT, GL_DIFFUSE, black);
         glMaterialfv(GL_FRONT, GL_SPECULAR, black);
