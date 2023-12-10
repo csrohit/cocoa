@@ -23,12 +23,7 @@ extern FILE *gpFile;
 
 @implementation MyOpenGLView {
     @private
-        GLfloat angleRed;
-        GLfloat angleGreen;
-        GLfloat angleBlue;
         CVDisplayLinkRef displayLink;
-        GLUquadric* pQuadric;
-
 }
 
     - (instancetype)initWithFrame:(NSRect)frameRect {
@@ -77,12 +72,6 @@ extern FILE *gpFile;
     }
 
     - (void)dealloc {
-        if (nullptr != pQuadric)
-        {
-            gluDeleteQuadric(pQuadric);
-            pQuadric = nullptr;
-        }
-
         CVDisplayLinkStop(displayLink);
         CVDisplayLinkRelease(displayLink);
         [super dealloc];
@@ -115,8 +104,6 @@ extern FILE *gpFile;
         fprintf(gpFile, "Version : %s\n", glGetString(GL_VERSION));
         fprintf(gpFile, "GLSL Version : %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-        /* Initialize quadric */
-        pQuadric = gluNewQuadric();
         [self reshape];
     }
 
@@ -143,20 +130,6 @@ extern FILE *gpFile;
             }
         }
 
-    - (void)toggleLighting
-    {
-        static bool bIsLightingEnabled = false;
-        if(false == bIsLightingEnabled)
-        {
-            glEnable(GL_LIGHTING);
-        }
-        else {
-            glDisable(GL_LIGHTING);
-        }
-        bIsLightingEnabled = !bIsLightingEnabled;
-    }
-   
-        
     - (void) display
     {
         [[self openGLContext] makeCurrentContext];
@@ -164,9 +137,6 @@ extern FILE *gpFile;
         
         /*--- draw here ---*/
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
 
         /*--- ** ---*/
         glFlush();
