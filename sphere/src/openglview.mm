@@ -95,55 +95,9 @@ struct MyLight lights[]=
 
 };
 
-#define NUM_LIGHTS 3U
-
 GLfloat globalAmbient[]        = {1.0f, 1.0f, 1.0f, 1.0f};
 GLfloat ground[]               = {0.5f, 0.5f, 0.5f, 1.0f};
 GLfloat cosmisAmbientDefault[] = {0.2f, 0.2f, 0.2f, 1.0f};
-GLfloat* lightColor[4] = 
-    {
-        black,
-        black,
-        black,
-    };
-
-
-bool lightState[3] = {false, false, false};
-
-GLfloat ambient[][4] = 
-    {
-        {0.0f, 0.0f, 0.0f,1.0f},
-        {0.0f, 0.0f, 0.0f,1.0f},
-        {0.0f, 0.0f, 0.0f,1.0f},
-    };
-
-GLfloat diffuse[][4] = 
-    {
-        {1.0f, 0.0f, 0.0f, 1.0f},
-        {0.0f, 1.0f, 0.0f,1.0f},
-        {0.0f, 0.0f, 1.0f,1.0f},
-    };
-
-GLfloat axis[][4] = 
-    {
-        {0.0f, 1.0f, 0.0f,1.0f},
-        {0.0f, 0.0f, 1.0f,1.0f},
-        {1.0f, 0.0f, 0.0f, 1.0f},
-    };
-
-GLfloat position[][4] = 
-    {
-        {2.0f, 0.0f, 0.0f, 1.0f},
-        {0.0f, 2.0f, 0.0f,1.0f},
-        {0.0f, 0.0f, 2.0f,1.0f},
-    };
-
-GLfloat specular[][4] = 
-    {
-        {1.0f, 1.0f, 1.0f, 1.0f},
-        {1.0f, 1.0f, 1.0f, 1.0f},
-        {1.0f, 1.0f, 1.0f, 1.0f},
-    };
 
 GLfloat materialAmbient[]      = {1.0f, 1.0f, 1.0f, 1.0f};
 GLfloat materialDiffuse[]      = {1.0f, 1.0f, 1.0f, 1.0f};
