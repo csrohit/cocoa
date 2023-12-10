@@ -17,18 +17,65 @@
 #include <OpenGL/glu.h>
 #import "openglview.h"
 
+struct MyLight
+{
+    int iLight;
+    bool state;
+    GLfloat* currentColor;
+    GLfloat ambient[4];
+    GLfloat diffuse[4];
+    GLfloat specular[4];
+    GLfloat position[4];
+    GLfloat axis[3];
+};
+
+GLfloat black[4]               = {0.0f, 0.0f, 0.0f, 1.0f};
+struct MyLight lights[]= 
+{
+    {
+        GL_LIGHT0,
+        false,
+        black,
+        {0.0f, 0.0f, 0.0f, 1.0f},
+        {1.0f, 0.0f, 0.0f, 1.0f},
+        {1.0f, 1.0f, 1.0f, 1.0f},
+        {2.0f, 0.0f, 0.0f,1.0f},
+        {0.0f, 1.0f, 0.0f},
+    },
+    {
+        GL_LIGHT1,
+        false,
+        black,
+        {0.0f, 0.0f, 0.0f, 1.0f},
+        {0.0f, 1.0f, 0.0f, 1.0f},
+        {1.0f, 1.0f, 1.0f, 1.0f},
+        {0.0f, 2.0f, 0.0f,1.0f},
+        {0.0f, 0.0f, 1.0f},
+    },
+    {
+        GL_LIGHT2,
+        false,
+        black,
+        {0.0f, 0.0f, 0.0f, 1.0f},
+        {0.0f, 0.0f, 1.0f, 1.0f},
+        {1.0f, 1.0f, 1.0f, 1.0f},
+        {0.0f, 0.0f, 2.0f,1.0f},
+        {1.0f, 0.0f, 0.0f},
+    }
+};
+
 #define NUM_LIGHTS 3U
 
 GLfloat globalAmbient[]        = {1.0f, 1.0f, 1.0f, 1.0f};
 GLfloat ground[]               = {0.5f, 0.5f, 0.5f, 1.0f};
 GLfloat cosmisAmbientDefault[] = {0.2f, 0.2f, 0.2f, 1.0f};
-GLfloat black[4]               = {0.0f, 0.0f, 0.0f, 1.0f};
 GLfloat* lightColor[4] = 
     {
         black,
         black,
         black,
     };
+
 
 bool lightState[3] = {false, false, false};
 
@@ -171,14 +218,16 @@ extern FILE *gpFile;
         glDisable(GL_CULL_FACE);
         glShadeModel(GL_SMOOTH);
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
+        
+        struct MyLight* pLight;
         //set up light properties
-        for(uint32_t idx = 0U; idx < NUM_LIGHTS; idx++)
+        for(uint32_t idx = 0U; idx < sizeof(lights)/sizeof(struct MyLight); idx++)
         {
-            glLightfv(GL_LIGHT0 + idx, GL_AMBIENT, ambient[idx]);
-            glLightfv(GL_LIGHT0 + idx, GL_DIFFUSE, diffuse[idx]);
-            glLightfv(GL_LIGHT0 + idx, GL_SPECULAR, specular[idx]);
-            glLightfv(GL_LIGHT0 + idx, GL_POSITION, black);
+            pLight = lights + idx;
+            glLightfv(pLight->iLight, GL_AMBIENT, pLight->ambient);
+            glLightfv(pLight->iLight, GL_DIFFUSE, pLight->diffuse);
+            glLightfv(pLight->iLight, GL_SPECULAR, pLight->specular);
+            glLightfv(pLight->iLight, GL_POSITION, pLight->position);
             //glEnable(GL_LIGHT0 + idx);
         }
 
@@ -207,24 +256,25 @@ extern FILE *gpFile;
         [[self openGLContext] makeCurrentContext];
         CGLLockContext((CGLContextObj)[[self openGLContext] CGLContextObj]);
 
-        if(( key >= '0' )&& (key - '0' < NUM_LIGHTS))
+        if(( key >= '0' )&& (key - '0' < sizeof(lights)/sizeof(struct MyLight)))
         {
             uint32_t idx = key - '0';
-                if(false == lightState[idx])
-                {
-                    [self toggleLighting];
-                    glEnable(GL_LIGHT0 + idx);
-                    lightColor[idx] = diffuse[idx];
-                    [self toggleLighting];
-                }
-                else
-                {    
-                    [self toggleLighting];
-                    glDisable(GL_LIGHT0 + idx);
-                    lightColor[idx] = black;
-                    [self toggleLighting];
-                }
-                lightState[idx] = !lightState[idx];
+            struct MyLight* pLight = lights + idx;
+            if(false == pLight->state)
+            {
+                [self toggleLighting];
+                glEnable(pLight->iLight);
+                pLight->currentColor = pLight->diffuse;
+                [self toggleLighting];
+            }
+            else
+            {    
+                [self toggleLighting];
+                glDisable(pLight->iLight);
+                pLight->currentColor = black;
+                [self toggleLighting];
+            }
+            pLight->state = !pLight->state;
         }
         else
         {
@@ -298,18 +348,19 @@ extern FILE *gpFile;
         glMaterialfv(GL_FRONT, GL_EMISSION, black);
         glMaterialfv(GL_FRONT, GL_DIFFUSE, materialDiffuse);
         glMaterialfv(GL_FRONT, GL_SPECULAR, materialSpecular);
-        gluSphere(pQuadric, 1.0f, 50, 50); // it will create all normals for you
+        gluSphere(pQuadric, 1.0f, 100, 100); // it will create all normals for you
         
         glMaterialfv(GL_FRONT, GL_DIFFUSE, black);
         glMaterialfv(GL_FRONT, GL_SPECULAR, black);
-
-        for(uint32_t idx = 0U; idx < 3; idx++)
+        struct MyLight* pLight;
+        for(uint32_t idx = 0U; idx < sizeof(lights)/sizeof(struct MyLight); idx++)
         {
+            pLight = lights + idx;
             glPushMatrix();
-            glRotatef(angleRed, axis[idx][0], axis[idx][1],axis[idx][2]);
-            glTranslatef(position[idx][0], position[idx][1],position[idx][2]);
-            glLightfv(GL_LIGHT0 + idx, GL_POSITION, black);
-            glMaterialfv(GL_FRONT, GL_EMISSION, lightColor[idx]);
+            glRotatef(angleRed, pLight->axis[0], pLight->axis[1], pLight->axis[2]);
+            glTranslatef(pLight->position[0], pLight->position[1],pLight->position[2]);
+            glLightfv(pLight->iLight, GL_POSITION, black);
+            glMaterialfv(GL_FRONT, GL_EMISSION, pLight->currentColor);
             gluSphere(pQuadric, 0.1f, 20, 20); // it will create all normals for you
             glPopMatrix();
         }
