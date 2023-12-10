@@ -60,9 +60,17 @@ extern FILE *gpFile;
 
     - (instancetype)initWithFrame:(NSRect)frameRect {
 
+        /*       
+            NSOpenGLPFAWindow,
+            NSOpenGLProfileVersionLegacy
+            ---- above profile or below profile both work ----
+            NSOpenGLPFAWindow
+            ---- study and analyse which one is used for what purpose ----
+        */
         GLuint attributes[] =
         {
-            NSOpenGLPFAWindow,
+            NSOpenGLPFAOpenGLProfile,
+            NSOpenGLProfileVersionLegacy,
             NSOpenGLPFAAccelerated,
             NSOpenGLPFADoubleBuffer,
             NSOpenGLPFAColorSize, 24,

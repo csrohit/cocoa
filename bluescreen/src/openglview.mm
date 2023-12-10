@@ -136,8 +136,7 @@ extern FILE *gpFile;
         CGLLockContext((CGLContextObj)[[self openGLContext] CGLContextObj]);
         
         /*--- draw here ---*/
-
-
+        glClear(GL_COLOR_BUFFER_BIT);
         /*--- ** ---*/
         glFlush();
         CGLFlushDrawable((CGLContextObj)[[self openGLContext] CGLContextObj]);

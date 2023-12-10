@@ -121,10 +121,17 @@ extern FILE *gpFile;
 }
 
     - (instancetype)initWithFrame:(NSRect)frameRect {
-
+        /*       
+            NSOpenGLPFAWindow,
+            NSOpenGLProfileVersionLegacy
+            ---- above profile or below profile both work ----
+            NSOpenGLPFAWindow
+            ---- study and analyse which one is used for what purpose ----
+        */
         GLuint attributes[] =
         {
-            NSOpenGLPFAWindow,
+            NSOpenGLPFAOpenGLProfile,
+            NSOpenGLProfileVersionLegacy,
             NSOpenGLPFAAccelerated,
             NSOpenGLPFADoubleBuffer,
             NSOpenGLPFAColorSize, 24,
@@ -215,7 +222,11 @@ extern FILE *gpFile;
             glLightfv(pLight->iLight, GL_POSITION, pLight->position);
             //glEnable(GL_LIGHT0 + idx);
         }
-
+        fprintf(gpFile, "OpenGL Info\n");
+        fprintf(gpFile, "Vendor : %s\n", glGetString(GL_VENDOR));
+        fprintf(gpFile, "Renderer : %s\n", glGetString(GL_RENDERER));
+        fprintf(gpFile, "Version : %s\n", glGetString(GL_VERSION));
+        fprintf(gpFile, "GLSL Version : %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
         //set up material properties
         glMaterialfv(GL_FRONT, GL_AMBIENT, materialAmbient);
         glMaterialfv(GL_FRONT, GL_DIFFUSE, materialDiffuse);
