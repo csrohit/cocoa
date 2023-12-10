@@ -59,6 +59,7 @@ find_library(COCOA_FRAMEWORK Cocoa)
 find_library(COREVIDEO_FRAMEWORK QuartzCore)
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC GL_SILENCE_DEPRECATION)
+target_compile_options(${PROJECT_NAME} PRIVATE -Wno-deprecated-declarations)
 
 target_include_directories(${PROJECT_NAME} PUBLIC include)
 
