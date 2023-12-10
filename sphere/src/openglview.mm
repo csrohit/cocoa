@@ -17,86 +17,61 @@
 #include <OpenGL/glu.h>
 #import "openglview.h"
 
+#define NUM_LIGHTS 3U
+
 GLfloat globalAmbient[]        = {1.0f, 1.0f, 1.0f, 1.0f};
 GLfloat ground[]               = {0.5f, 0.5f, 0.5f, 1.0f};
 GLfloat cosmisAmbientDefault[] = {0.2f, 0.2f, 0.2f, 1.0f};
 GLfloat black[4]               = {0.0f, 0.0f, 0.0f, 1.0f};
-GLfloat *pLightColor0          = black;
-GLfloat *pLightColor1           = black;
-GLfloat *pLightColor2           = black;
-GLfloat lightDispalcement = 2.0f;
+GLfloat* lightColor[4] = 
+    {
+        black,
+        black,
+        black,
+    };
 
-GLfloat lightRedAmbient[]        = {0.0f, 0.0f, 0.0f, 1.0f};
-GLfloat lightRedDiffuse[]        = {1.0f, 0.0f, 0.0f, 1.0f};
-GLfloat lightRedSpecular[]       = {1.0f, 1.0f, 1.0f, 1.0f};
-GLfloat lightRedPosition[]       = {0.0f, 0.0f, 0.0f, 1.0f};
+bool lightState[3] = {false, false, false};
 
-GLfloat lightGreenAmbient[]        = {0.0f, 0.0f, 0.0f, 1.0f};
-GLfloat lightGreenDiffuse[]        = {0.0f, 1.0f, 0.0f, 1.0f};
-GLfloat lightGreenSpecular[]       = {1.0f, 1.0f, 1.0f, 1.0f};
-GLfloat lightGreenPosition[]       = {-2.0f, 0.0f, 0.0f, 1.0f};
+GLfloat ambient[][4] = 
+    {
+        {0.0f, 0.0f, 0.0f,1.0f},
+        {0.0f, 0.0f, 0.0f,1.0f},
+        {0.0f, 0.0f, 0.0f,1.0f},
+    };
 
-GLfloat lightBlueAmbient[]        = {0.0f, 0.0f, 0.0f, 1.0f};
-GLfloat lightBlueDiffuse[]        = {0.0f, 0.0f, 1.0f, 1.0f};
-GLfloat lightBlueSpecular[]       = {1.0f, 1.0f, 1.0f, 1.0f};
-GLfloat lightBluePosition[]       = {-2.0f, 0.0f, 0.0f, 1.0f};
+GLfloat diffuse[][4] = 
+    {
+        {1.0f, 0.0f, 0.0f, 1.0f},
+        {0.0f, 1.0f, 0.0f,1.0f},
+        {0.0f, 0.0f, 1.0f,1.0f},
+    };
+
+GLfloat axis[][4] = 
+    {
+        {0.0f, 1.0f, 0.0f,1.0f},
+        {0.0f, 0.0f, 1.0f,1.0f},
+        {1.0f, 0.0f, 0.0f, 1.0f},
+    };
+
+GLfloat position[][4] = 
+    {
+        {2.0f, 0.0f, 0.0f, 1.0f},
+        {0.0f, 2.0f, 0.0f,1.0f},
+        {0.0f, 0.0f, 2.0f,1.0f},
+    };
+
+GLfloat specular[][4] = 
+    {
+        {1.0f, 1.0f, 1.0f, 1.0f},
+        {1.0f, 1.0f, 1.0f, 1.0f},
+        {1.0f, 1.0f, 1.0f, 1.0f},
+    };
 
 GLfloat materialAmbient[]      = {1.0f, 1.0f, 1.0f, 1.0f};
 GLfloat materialDiffuse[]      = {1.0f, 1.0f, 1.0f, 1.0f};
 GLfloat materialSpecular[]     = {1.0f, 1.0f, 1.0f, 1.0f};
 GLfloat materialShininess      = 128.0f;
 
-
-GLfloat lightAmbient[][4] = 
-    {
-        {0.0f, 0.0f, 0.0f, 1.0f},
-        {0.0f, 0.0f, 0.0f, 1.0f},
-        {0.0f, 0.0f, 0.0f, 1.0f},
-        {0.0f, 0.0f, 0.0f, 1.0f},
-        {0.0f, 0.0f, 0.0f, 1.0f},
-        {0.0f, 0.0f, 0.0f, 1.0f}
-    };
-GLfloat lightDiffuse[][4] = 
-    {
-        {1.0f, 0.0f, 0.0f, 1.0f},
-        {0.0f, 1.0f, 0.0f, 1.0f},
-        {0.0f, 0.0f, 1.0f, 1.0f},
-        {0.0f, 1.0f, 1.0f, 1.0f},
-        {1.0f, 1.0f, 0.0f, 1.0f},
-        {1.0f, 0.0f, 1.0f, 1.0f}
-    };
-
-GLfloat lightSpecular[][4] = 
-    {
-        {1.0f, 1.0f, 1.0f, 1.0f},
-        {1.0f, 1.0f, 1.0f, 1.0f},
-        {1.0f, 1.0f, 1.0f, 1.0f},
-        {1.0f, 1.0f, 1.0f, 1.0f},
-        {1.0f, 1.0f, 1.0f, 1.0f},
-        {1.0f, 1.0f, 1.0f, 1.0f}
-    };
-
-GLfloat shininess[][1] = 
-{
-    {128.0f},
-    {128.0f},
-    {128.0f},
-    {128.0f},
-    {128.0f},
-    {128.0f}
-};
-
-GLfloat* currentLightColor[] = 
-    {
-        black,
-        black,
-        black,
-        black,
-        black,
-        black,
-    };
-
-GLfloat temp[4];
 
 /* CVDisplayCallback */
 CVReturn MyDisplayLinkCallback(CVDisplayLinkRef, const CVTimeStamp*, const CVTimeStamp*,
@@ -197,22 +172,15 @@ extern FILE *gpFile;
         glShadeModel(GL_SMOOTH);
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
-        //set up light 0 properties
-        glLightfv(GL_LIGHT0, GL_AMBIENT, lightRedAmbient);
-        glLightfv(GL_LIGHT0, GL_DIFFUSE, lightRedDiffuse);
-        glLightfv(GL_LIGHT0, GL_SPECULAR, lightRedSpecular);
-        glLightfv(GL_LIGHT0, GL_POSITION, lightRedPosition);
-
-        //set up light 1 properties
-        glLightfv(GL_LIGHT1, GL_AMBIENT, lightGreenAmbient);
-        glLightfv(GL_LIGHT1, GL_DIFFUSE, lightGreenDiffuse);
-        glLightfv(GL_LIGHT1, GL_SPECULAR, lightGreenSpecular);
-        glLightfv(GL_LIGHT1, GL_POSITION, lightGreenPosition);
-
-        glLightfv(GL_LIGHT2, GL_AMBIENT, lightBlueAmbient);
-        glLightfv(GL_LIGHT2, GL_DIFFUSE, lightBlueDiffuse);
-        glLightfv(GL_LIGHT2, GL_SPECULAR, lightBlueSpecular);
-        glLightfv(GL_LIGHT2, GL_POSITION, lightBluePosition);
+        //set up light properties
+        for(uint32_t idx = 0U; idx < NUM_LIGHTS; idx++)
+        {
+            glLightfv(GL_LIGHT0 + idx, GL_AMBIENT, ambient[idx]);
+            glLightfv(GL_LIGHT0 + idx, GL_DIFFUSE, diffuse[idx]);
+            glLightfv(GL_LIGHT0 + idx, GL_SPECULAR, specular[idx]);
+            glLightfv(GL_LIGHT0 + idx, GL_POSITION, black);
+            //glEnable(GL_LIGHT0 + idx);
+        }
 
         //set up material properties
         glMaterialfv(GL_FRONT, GL_AMBIENT, materialAmbient);
@@ -220,10 +188,7 @@ extern FILE *gpFile;
         glMaterialfv(GL_FRONT, GL_SPECULAR, materialSpecular);
         glMaterialf(GL_FRONT, GL_SHININESS, materialShininess);
 
-        glEnable(GL_LIGHTING);
-        glEnable(GL_LIGHT0);
-        glEnable(GL_LIGHT1);
-        glEnable(GL_LIGHT2);
+        //glEnable(GL_LIGHTING);
 
         /* Initialize quadric */
         pQuadric = gluNewQuadric();
@@ -238,97 +203,64 @@ extern FILE *gpFile;
 
     -(void)keyDown:(NSEvent *)event {
         int key = [[event characters] characterAtIndex:0];
+
         [[self openGLContext] makeCurrentContext];
         CGLLockContext((CGLContextObj)[[self openGLContext] CGLContextObj]);
-        switch(key)
-        {
-            case 27:
-                [[self window] close];
-                break;
-            
-            case 'F':
-            case 'f':
-                [[self window] toggleFullScreen:self];
-                break;
 
-            case 'r':
-            case 'R':
-                static bool bIsLight0Enabled = false;
-                if(false == bIsLight0Enabled)
+        if(( key >= '0' )&& (key - '0' < NUM_LIGHTS))
+        {
+            uint32_t idx = key - '0';
+                if(false == lightState[idx])
                 {
                     [self toggleLighting];
-                    glEnable(GL_LIGHT0);
-                    pLightColor0 = lightRedDiffuse;
+                    glEnable(GL_LIGHT0 + idx);
+                    lightColor[idx] = diffuse[idx];
                     [self toggleLighting];
                 }
                 else
                 {    
                     [self toggleLighting];
-                    glDisable(GL_LIGHT0);
-                    pLightColor0 = black;
+                    glDisable(GL_LIGHT0 + idx);
+                    lightColor[idx] = black;
                     [self toggleLighting];
                 }
-                bIsLight0Enabled = !bIsLight0Enabled;
-                break;
+                lightState[idx] = !lightState[idx];
+        }
+        else
+        {
+            switch(key)
+            {
+                case 27:
+                    [[self window] close];
+                    break;
+                
+                case 'F':
+                case 'f':
+                    [[self window] toggleFullScreen:self];
+                    break;
 
-            case 'g':
-            case 'G':
-                static bool bIsLight1Enabled = false;
-                if(false == bIsLight1Enabled)
-                {
+                case 'L':
+                case 'l':
                     [self toggleLighting];
-                    glEnable(GL_LIGHT1);
-                    pLightColor1 = lightGreenDiffuse;
-                    [self toggleLighting];
-                }
-                else
-                {
-                    [self toggleLighting];
-                    glDisable(GL_LIGHT1);
-                    pLightColor1 = black;
-                    [self toggleLighting];
-                }
-                bIsLight1Enabled = !bIsLight1Enabled;
-                break;
-            case 'b':
-            case 'B':
-                static bool bIsLight2Enabled = false;
-                if(false == bIsLight2Enabled)
-                {
-                    [self toggleLighting];
-                    glEnable(GL_LIGHT1);
-                    pLightColor2 = lightBlueDiffuse;
-                    [self toggleLighting];
-                }
-                else
-                {
-                    [self toggleLighting];
-                    glDisable(GL_LIGHT1);
-                    pLightColor2 = black;
-                    [self toggleLighting];
-                }
-                bIsLight2Enabled = !bIsLight2Enabled;
-                break;
-            case 'L':
-            case 'l':
-                [self toggleLighting];
-                break; 
-            case 'm':
-            case 'M':
-                static bool bIsCosmicEnabled = false;
-                if(false == bIsCosmicEnabled)
-                {
-                    [self toggleLighting];
-                    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
-                    [self toggleLighting];
-                }
-                else
-                {
-                    [self toggleLighting];
-                    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, cosmisAmbientDefault);
-                    [self toggleLighting];
-                }
-                bIsCosmicEnabled = !bIsCosmicEnabled;
+                    break; 
+
+                case 'm':
+                case 'M':
+                    static bool bIsCosmicEnabled = false;
+                    if(false == bIsCosmicEnabled)
+                    {
+                        [self toggleLighting];
+                        glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
+                        [self toggleLighting];
+                    }
+                    else
+                    {
+                        [self toggleLighting];
+                        glLightModelfv(GL_LIGHT_MODEL_AMBIENT, cosmisAmbientDefault);
+                        [self toggleLighting];
+                    }
+                    bIsCosmicEnabled = !bIsCosmicEnabled;
+            }
         }
         CGLFlushDrawable((CGLContextObj)[[self openGLContext] CGLContextObj]);
         CGLUnlockContext((CGLContextObj)[[self openGLContext] CGLContextObj]);
@@ -365,33 +297,22 @@ extern FILE *gpFile;
 
         glMaterialfv(GL_FRONT, GL_EMISSION, black);
         glMaterialfv(GL_FRONT, GL_DIFFUSE, materialDiffuse);
+        glMaterialfv(GL_FRONT, GL_SPECULAR, materialSpecular);
         gluSphere(pQuadric, 1.0f, 50, 50); // it will create all normals for you
-
-        glMaterialfv(GL_FRONT, GL_DIFFUSE, black);
-        glPushMatrix();
-        glRotatef(angleRed, 0.0f, 1.0f, 0.0f);
-        glTranslatef(0.0f, 0.0f, lightDispalcement);
-        glLightfv(GL_LIGHT0, GL_POSITION, black);
-        glMaterialfv(GL_FRONT, GL_EMISSION, lightRedDiffuse);
-        gluSphere(pQuadric, 0.1f, 40, 40); // it will create all normals for you
-        glPopMatrix();
         
-        glPushMatrix();
-        glRotatef(angleRed, 0.0f, 0.0f, 1.0f);
-        glTranslatef(lightDispalcement, 0.0f, 0.0f);
-        glLightfv(GL_LIGHT1, GL_POSITION, black);
-        glMaterialfv(GL_FRONT, GL_EMISSION, lightGreenDiffuse);
-        gluSphere(pQuadric, 0.1f, 40, 40); // it will create all normals for you
-        glPopMatrix();
+        glMaterialfv(GL_FRONT, GL_DIFFUSE, black);
+        glMaterialfv(GL_FRONT, GL_SPECULAR, black);
 
-
-        glPushMatrix();
-        glRotatef(angleRed, 1.0f, 0.0f, 0.0f);
-        glTranslatef(0.0f, lightDispalcement, 0.0f);
-        glLightfv(GL_LIGHT2, GL_POSITION, black);
-        glMaterialfv(GL_FRONT, GL_EMISSION, lightBlueDiffuse);
-        gluSphere(pQuadric, 0.1f, 40, 40); // it will create all normals for you
-        glPopMatrix();
+        for(uint32_t idx = 0U; idx < 3; idx++)
+        {
+            glPushMatrix();
+            glRotatef(angleRed, axis[idx][0], axis[idx][1],axis[idx][2]);
+            glTranslatef(position[idx][0], position[idx][1],position[idx][2]);
+            glLightfv(GL_LIGHT0 + idx, GL_POSITION, black);
+            glMaterialfv(GL_FRONT, GL_EMISSION, lightColor[idx]);
+            gluSphere(pQuadric, 0.1f, 20, 20); // it will create all normals for you
+            glPopMatrix();
+        }
 
         /*--- ** ---*/
         glFlush();
