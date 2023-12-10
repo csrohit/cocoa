@@ -43,9 +43,9 @@ endif()
 
 # Project metadata
 project(
-  porsche
+  template
   VERSION 1.0
-  DESCRIPTION "Model loading"
+  DESCRIPTION "Template program for MacOS"
   LANGUAGES CXX)
 
 file(GLOB SOURCE_FILES src/*.mm src/*.cpp)
