@@ -7,8 +7,7 @@
    "main.o",
    "-c",
    "main.cpp",
-   "-Imetal-cpp",
-   "-Imetal-cpp-extensions"
+   "-Imetal-cpp"
   ],
   "file": "main.cpp"
  }
