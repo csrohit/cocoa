@@ -67,6 +67,8 @@ FILE* gpFile;
             This will ensure our app gets the events
         */
         [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
+
+        [NSApp activateIgnoringOtherApps:true];
     }
 
     -(void)applicationWillTerminate:(NSNotification*)aNotification
