@@ -1,0 +1,15 @@
+[
+ {
+  "directory": "/Users/csrohit/code/cocoa/metal",
+  "arguments": [
+   "clang++",
+   "-o",
+   "main.o",
+   "-c",
+   "main.cpp",
+   "-Imetal-cpp",
+   "-Imetal-cpp-extensions"
+  ],
+  "file": "main.cpp"
+ }
+]
