@@ -12,10 +12,10 @@ OBJS := $(addsuffix .o,$(basename $(SRCS)))			# replace .c with .o
 
 
 ${TARGET}: ${OBJS}
-	clang++ -o $@ ${OBJS} ${CFLAGS}
+	clang++ -o $@ ${OBJS} ${CFLAGS} -g3
 
 %.o: %.cpp
-	clang++ -o $@ -c $< ${INC_FLAGS} 
+	clang++ -o $@ -c $< ${INC_FLAGS} -g3
 
 clean:
 	rm ${OBJS} ${TARGET}

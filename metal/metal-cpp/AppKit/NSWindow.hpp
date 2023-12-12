@@ -25,6 +25,7 @@
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+#include "AppKit/NSApplication.hpp"
 #include "AppKitPrivate.hpp"
 #include "NSView.hpp"
 #include <Foundation/NSObject.hpp>

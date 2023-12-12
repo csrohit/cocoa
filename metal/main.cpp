@@ -1,6 +1,7 @@
 #define NS_PRIVATE_IMPLEMENTATION
 #include <iostream>
 #include "AppKit/AppKit.hpp"
+#include <AppKit/NSOpenGLView.hpp>
 
 #pragma region Declarations {
 class AppDelegate: public NS::ApplicationDelegate
@@ -16,8 +17,16 @@ class AppDelegate: public NS::ApplicationDelegate
 
     private:
         NS::Window* pWindow;
+        NS::OpenGLView* pOpenGLView;
 };
 
+class MyOpenGLView: public NS::OpenGLView
+{
+        public:
+            ~MyOpenGLView();
+        private:
+            
+};
 
 #pragma endregion Declarations }
 
@@ -56,7 +65,7 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
         NS::BackingStoreBuffered,
         false );
 
-
+    this->pOpenGLView = NS::OpenGLView::alloc()->initWithFrame(frame);
     this->pWindow->setTitle( NS::String::string( "Rohit Nimkar: GL CPP", NS::StringEncoding::UTF8StringEncoding ) );
     this->pWindow->center();
     this->pWindow->makeKeyAndOrderFront( nullptr );

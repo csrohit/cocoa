@@ -80,9 +80,12 @@ namespace Private
         _NS_PRIVATE_DEF_CLS(NSString);
         _NS_PRIVATE_DEF_CLS(NSURL);
         _NS_PRIVATE_DEF_CLS(NSValue);
+
+/*-- Rohit Nimkar: Begin --*/
         _NS_PRIVATE_DEF_CLS(NSOpenGLContext);
         _NS_PRIVATE_DEF_CLS(NSOpenGLPixelFormat);
         _NS_PRIVATE_DEF_CLS(NSOpenGLView);
+/*-- Rohit Nimkar: End --*/
 
     } // Class
 } // Private
@@ -484,6 +487,29 @@ namespace Private
             "wait");
         _NS_PRIVATE_DEF_SEL(waitUntilDate_,
             "waitUntilDate:");
+
+        /*-- Rohit Nimkar: Begin --*/
+        // OpenGLView: Begin
+        // OpenGLView: End
+        _NS_PRIVATE_DEF_SEL(clearCurrentContext, "clearCurrentContext");
+        _NS_PRIVATE_DEF_SEL(prepareOpenGL_, "prepareOpenGL");
+        _NS_PRIVATE_DEF_SEL(currentContext, "currentContext");
+        _NS_PRIVATE_DEF_SEL(flushBuffer, "flushBuffer");
+        _NS_PRIVATE_DEF_SEL(init_, "init:");
+        _NS_PRIVATE_DEF_SEL(initWithAttributes_, "initWithAttributes:");
+        _NS_PRIVATE_DEF_SEL(initWithFormat_shareContext_,
+                            "initWithFormat:shareContext:");
+        _NS_PRIVATE_DEF_SEL(makeCurrentContext, "makeCurrentContext");
+        _NS_PRIVATE_DEF_SEL(openGLContext, "openGLContext");
+        _NS_PRIVATE_DEF_SEL(pixelFormat, "pixelFormat");
+        _NS_PRIVATE_DEF_SEL(setOpenGLContext_, "setOpenGLContext:");
+        _NS_PRIVATE_DEF_SEL(setPixelFormat_, "setPixelFormat:");
+        _NS_PRIVATE_DEF_SEL(setWantsBestResolutionOpenGLSurface_,
+                            "setWantsBestResolutionOpenGLSurface:");
+        _NS_PRIVATE_DEF_SEL(wantsBestResolutionOpenGLSurface,
+                            "wantsBestResolutionOpenGLSurface");
+        /*-- Rohit Nimkar: End --*/
+
     } // Class
 } // Private
 } // MTL
